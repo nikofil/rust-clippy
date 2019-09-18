@@ -606,6 +606,7 @@ enum NeverLoopResult {
     Otherwise,
 }
 
+#[must_use]
 fn absorb_break(arg: &NeverLoopResult) -> NeverLoopResult {
     match *arg {
         NeverLoopResult::AlwaysBreak | NeverLoopResult::Otherwise => NeverLoopResult::Otherwise,
@@ -614,6 +615,7 @@ fn absorb_break(arg: &NeverLoopResult) -> NeverLoopResult {
 }
 
 // Combine two results for parts that are called in order.
+#[must_use]
 fn combine_seq(first: NeverLoopResult, second: NeverLoopResult) -> NeverLoopResult {
     match first {
         NeverLoopResult::AlwaysBreak | NeverLoopResult::MayContinueMainLoop => first,
@@ -622,6 +624,7 @@ fn combine_seq(first: NeverLoopResult, second: NeverLoopResult) -> NeverLoopResu
 }
 
 // Combine two results where both parts are called but not necessarily in order.
+#[must_use]
 fn combine_both(left: NeverLoopResult, right: NeverLoopResult) -> NeverLoopResult {
     match (left, right) {
         (NeverLoopResult::MayContinueMainLoop, _) | (_, NeverLoopResult::MayContinueMainLoop) => {
@@ -633,6 +636,7 @@ fn combine_both(left: NeverLoopResult, right: NeverLoopResult) -> NeverLoopResul
 }
 
 // Combine two results where only one of the part may have been executed.
+#[must_use]
 fn combine_branches(b1: NeverLoopResult, b2: NeverLoopResult) -> NeverLoopResult {
     match (b1, b2) {
         (NeverLoopResult::AlwaysBreak, NeverLoopResult::AlwaysBreak) => NeverLoopResult::AlwaysBreak,

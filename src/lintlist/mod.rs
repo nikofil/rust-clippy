@@ -6,7 +6,7 @@ pub use lint::Lint;
 pub use lint::LINT_LEVELS;
 
 // begin lint list, do not remove this comment, it’s used in `update_lints`
-pub const ALL_LINTS: [Lint; 316] = [
+pub const ALL_LINTS: [Lint; 318] = [
     Lint {
         name: "absurd_extreme_comparisons",
         group: "correctness",
@@ -1142,6 +1142,13 @@ pub const ALL_LINTS: [Lint; 316] = [
         module: "inherent_impl",
     },
     Lint {
+        name: "must_use_unit",
+        group: "style",
+        desc: "`#[must_use]` attribute on a unit-returning function / method",
+        deprecation: None,
+        module: "functions",
+    },
+    Lint {
         name: "mut_from_ref",
         group: "correctness",
         desc: "fns that create mutable refs from immutable ref args",
@@ -1497,6 +1504,13 @@ pub const ALL_LINTS: [Lint; 316] = [
         desc: "enums where all variants share a prefix/postfix",
         deprecation: None,
         module: "enum_variants",
+    },
+    Lint {
+        name: "pure_without_must_use",
+        group: "pedantic",
+        desc: "pure function or method without `#[must_use]` attribute",
+        deprecation: None,
+        module: "functions",
     },
     Lint {
         name: "question_mark",

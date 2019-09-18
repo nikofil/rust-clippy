@@ -21,6 +21,7 @@ pub use self::diagnostics::*;
 pub use self::hir_utils::{SpanlessEq, SpanlessHash};
 
 use std::borrow::Cow;
+use std::convert::TryFrom;
 use std::mem;
 
 use if_chain::if_chain;
@@ -46,12 +47,14 @@ use syntax::attr;
 use syntax::ext::hygiene::ExpnKind;
 use syntax::source_map::{Span, DUMMY_SP};
 use syntax::symbol::{kw, Symbol};
+use syntax_pos::BytePos;
 
 use crate::consts::{constant, Constant};
 use crate::reexport::*;
 
 /// Returns `true` if the two spans come from differing expansions (i.e., one is
 /// from a macro and one isn't).
+#[must_use]
 pub fn differing_macro_contexts(lhs: Span, rhs: Span) -> bool {
     rhs.ctxt() != lhs.ctxt()
 }
@@ -98,6 +101,7 @@ pub fn in_constant(cx: &LateContext<'_, '_>, id: HirId) -> bool {
 }
 
 /// Returns `true` if this `span` was expanded by any macro.
+#[must_use]
 pub fn in_macro(span: Span) -> bool {
     if span.from_expansion() {
         if let ExpnKind::Desugaring(..) = span.ctxt().outer_expn_data().kind {
@@ -121,6 +125,20 @@ pub fn is_present_in_source<T: LintContext>(cx: &T, span: Span) -> bool {
         }
     }
     true
+}
+
+/// on a best-effort basis, try to create a span for the function header only
+pub fn function_header_span(cx: &LateContext<'_, '_>, span: Span) -> Span {
+    if let Some(snippet) = snippet_opt(cx, span) {
+        let snippet = snippet.split('{').nth(0).unwrap_or("").trim_end();
+        if snippet.is_empty() {
+            span
+        } else {
+            span.with_hi(BytePos(span.lo().0 + u32::try_from(snippet.len()).unwrap()))
+        }
+    } else {
+        span
+    }
 }
 
 /// Checks if type is struct, enum or union type with the given def path.
@@ -726,6 +744,7 @@ pub fn is_adjusted(cx: &LateContext<'_, '_>, e: &Expr) -> bool {
 /// Returns the pre-expansion span if is this comes from an expansion of the
 /// macro `name`.
 /// See also `is_direct_expn_of`.
+#[must_use]
 pub fn is_expn_of(mut span: Span, name: &str) -> Option<Span> {
     loop {
         if span.from_expansion() {
@@ -753,6 +772,7 @@ pub fn is_expn_of(mut span: Span, name: &str) -> Option<Span> {
 /// `42` is considered expanded from `foo!` and `bar!` by `is_expn_of` but only
 /// `bar!` by
 /// `is_direct_expn_of`.
+#[must_use]
 pub fn is_direct_expn_of(span: Span, name: &str) -> Option<Span> {
     if span.from_expansion() {
         let data = span.ctxt().outer_expn_data();

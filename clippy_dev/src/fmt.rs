@@ -134,6 +134,7 @@ fn exec(
     Ok(success)
 }
 
+#[must_use]
 fn cargo_fmt(context: &FmtContext, path: &Path) -> Result<bool, CliError> {
     let mut args = vec!["+nightly", "fmt", "--all"];
     if context.check {
@@ -145,6 +146,7 @@ fn cargo_fmt(context: &FmtContext, path: &Path) -> Result<bool, CliError> {
     Ok(success)
 }
 
+#[must_use]
 fn rustfmt_test(context: &FmtContext) -> Result<(), CliError> {
     let program = "rustfmt";
     let dir = std::env::current_dir()?;
@@ -168,6 +170,7 @@ fn rustfmt_test(context: &FmtContext) -> Result<(), CliError> {
     }
 }
 
+#[must_use]
 fn rustfmt(context: &FmtContext, path: &Path) -> Result<bool, CliError> {
     let mut args = vec!["+nightly".as_ref(), path.as_os_str()];
     if context.check {

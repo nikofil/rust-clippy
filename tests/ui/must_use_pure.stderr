@@ -1,0 +1,22 @@
+error: this looks like a pure function without `#[must_use]` attribute
+  --> $DIR/must_use_pure.rs:12:1
+   |
+LL | pub fn pure(i: u8) -> u8 {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^ help: add the attribute: `#[must_use] pub fn pure(i: u8) -> u8`
+   |
+   = note: `-D clippy::pure-without-must-use` implied by `-D warnings`
+
+error: this looks like a pure method without `#[must_use]` attribute
+  --> $DIR/must_use_pure.rs:17:5
+   |
+LL |     pub fn inherent_pure(&self) -> u8 {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add the attribute: `#[must_use] pub fn inherent_pure(&self) -> u8`
+
+error: this looks like a pure method without `#[must_use]` attribute
+  --> $DIR/must_use_pure.rs:31:5
+   |
+LL |     fn trait_impl_pure(&self, i: u32) -> u32 {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add the attribute: `#[must_use] fn trait_impl_pure(&self, i: u32) -> u32`
+
+error: aborting due to 3 previous errors
+

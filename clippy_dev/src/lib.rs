@@ -137,6 +137,7 @@ pub fn gen_deprecated(lints: &[Lint]) -> Vec<String> {
 }
 
 /// Gathers all files in `src/clippy_lints` and gathers all lints inside
+#[must_use]
 pub fn gather_all() -> impl Iterator<Item = Lint> {
     lint_files().flat_map(|f| gather_from_file(&f))
 }
@@ -161,6 +162,7 @@ fn gather_from_file(dir_entry: &walkdir::DirEntry) -> impl Iterator<Item = Lint>
     parse_contents(&content, filename)
 }
 
+#[must_use]
 fn parse_contents(content: &str, filename: &str) -> impl Iterator<Item = Lint> {
     let lints = DEC_CLIPPY_LINT_RE
         .captures_iter(content)
@@ -173,6 +175,7 @@ fn parse_contents(content: &str, filename: &str) -> impl Iterator<Item = Lint> {
 }
 
 /// Collects all .rs files in the `clippy_lints/src` directory
+#[must_use]
 fn lint_files() -> impl Iterator<Item = walkdir::DirEntry> {
     // We use `WalkDir` instead of `fs::read_dir` here in order to recurse into subdirectories.
     // Otherwise we would not collect all the lints, for example in `clippy_lints/src/methods/`.

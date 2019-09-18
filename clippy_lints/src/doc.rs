@@ -112,6 +112,7 @@ impl EarlyLintPass for DocMarkdown {
 /// need to keep track of
 /// the spans but this function is inspired from the later.
 #[allow(clippy::cast_possible_truncation)]
+#[must_use]
 pub fn strip_doc_comment_decoration(comment: &str, span: Span) -> (String, Vec<(usize, Span)>) {
     // one-line comments lose their prefix
     const ONELINERS: &[&str] = &["///!", "///", "//!", "//"];

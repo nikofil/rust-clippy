@@ -1065,6 +1065,7 @@ Released 2018-09-13
 [`modulo_one`]: https://rust-lang.github.io/rust-clippy/master/index.html#modulo_one
 [`multiple_crate_versions`]: https://rust-lang.github.io/rust-clippy/master/index.html#multiple_crate_versions
 [`multiple_inherent_impl`]: https://rust-lang.github.io/rust-clippy/master/index.html#multiple_inherent_impl
+[`must_use_unit`]: https://rust-lang.github.io/rust-clippy/master/index.html#must_use_unit
 [`mut_from_ref`]: https://rust-lang.github.io/rust-clippy/master/index.html#mut_from_ref
 [`mut_mut`]: https://rust-lang.github.io/rust-clippy/master/index.html#mut_mut
 [`mut_range_bound`]: https://rust-lang.github.io/rust-clippy/master/index.html#mut_range_bound
@@ -1116,6 +1117,7 @@ Released 2018-09-13
 [`ptr_arg`]: https://rust-lang.github.io/rust-clippy/master/index.html#ptr_arg
 [`ptr_offset_with_cast`]: https://rust-lang.github.io/rust-clippy/master/index.html#ptr_offset_with_cast
 [`pub_enum_variant_names`]: https://rust-lang.github.io/rust-clippy/master/index.html#pub_enum_variant_names
+[`pure_without_must_use`]: https://rust-lang.github.io/rust-clippy/master/index.html#pure_without_must_use
 [`question_mark`]: https://rust-lang.github.io/rust-clippy/master/index.html#question_mark
 [`range_minus_one`]: https://rust-lang.github.io/rust-clippy/master/index.html#range_minus_one
 [`range_plus_one`]: https://rust-lang.github.io/rust-clippy/master/index.html#range_plus_one

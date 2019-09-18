@@ -34,6 +34,7 @@ fn exceeding_stderr_files(files: impl Iterator<Item = walkdir::DirEntry>) -> imp
     })
 }
 
+#[must_use]
 fn stderr_files() -> impl Iterator<Item = walkdir::DirEntry> {
     // We use `WalkDir` instead of `fs::read_dir` here in order to recurse into subdirectories.
     WalkDir::new("../tests/ui")
@@ -42,6 +43,7 @@ fn stderr_files() -> impl Iterator<Item = walkdir::DirEntry> {
         .filter(|f| f.path().extension() == Some(OsStr::new("stderr")))
 }
 
+#[must_use]
 fn count_linenumbers(filepath: &str) -> usize {
     if let Ok(mut file) = File::open(filepath) {
         let mut content = String::new();
